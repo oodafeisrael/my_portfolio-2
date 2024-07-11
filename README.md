@@ -1,0 +1,1 @@
+This is my final project for backend specialization. I am developing a task management web application called "TASCHEDO" to demonstrate my understanding of backenf CRUD implementation in software development. I am using python flask framework with sqlalchemy. The frontend built from boostrap 5. i will be using mysql in Wampserver for the storage system.
