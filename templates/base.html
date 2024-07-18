@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <title>Portfolio project</title>
-    <link rel="stylesheet" href="style.css">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css') }}">
 </head>
 <body>
     <div class="d-flex">
@@ -18,27 +18,59 @@
             <!-- Sidebar Navigation -->
             <ul class="sidebar-nav p-0">
                 <li class="sidebar-header">
-                    Tools & Components
+                    Menu
                 </li>
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
-                        <i class="lni lni-user"></i>
-                        <span>Profile</span>
+                <li class="sidebar-item" >
+                    <a href="/" class="sidebar-link">
+                        <i class="lni lni-home"></i>
+                        <span></span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
-                        <i class="lni lni-agenda"></i>
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                        data-bs-target="#task" aria-expanded="true" aria-controls="task">
+                        <i class="lni lni-notepad"></i>
                         <span>Task</span>
+                    </a>
+                    <ul id="task" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a href="{{url_for('personal')}}" class="sidebar-link">personal</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="{{url_for('work')}}" class="sidebar-link">Work</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="{{url_for('view')}}" class="sidebar-link">View task</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-item">
+                    <a href="{{url_for('notify')}}" class="sidebar-link">
+                        <i class="lni lni-alarm"></i>
+                        <span>Notification</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="{{url_for('about')}}" class="sidebar-link">
+                        <i class="lni lni-question-circle"></i>
+                        <span>About</span>
                     </a>
                 </li>
                 <li class="sidebar-header">
-                    Pages
+                    Tools
+                </li>
+                
+                
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link">
+                        <i class="lni lni-cog"></i>
+                        <span>Setting</span>
+                    </a>
                 </li>
                 <li class="sidebar-item">
                     <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
                         data-bs-target="#auth" aria-expanded="true" aria-controls="auth">
-                        <i class="lni lni-protection"></i>
+                        <i class="lni lni-lock"></i>
                         <span>Auth</span>
                     </a>
                     <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
@@ -50,24 +82,12 @@
                         </li>
                     </ul>
                 </li>
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
-                        <i class="lni lni-popup"></i>
-                        <span>Notification</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
-                        <i class="lni lni-cog"></i>
-                        <span>Setting</span>
-                    </a>
-                </li>
             </ul>
             <!-- Sidebar Navigation Ends -->
             <div class="sidebar-footer">
                 <a href="#" class="sidebar-link">
-                    <i class="lni lni-exit"></i>
-                    <span>Setting</span>
+                    <i class="lni lni-whatsapp"></i>
+                    <span>Group</span>
                 </a>
             </div>
         </aside>
@@ -76,19 +96,19 @@
         <div class="main">
             <nav class="navbar navbar-expand">
                 <button class="toggler-btn" type="button">
-                    <i class="lni lni-text-align-left"></i>
+                    <i class="lni lni-menu"></i>
                 </button>
             </nav>
             <main class="p-3">
                 <div class="container-fluid">
                     <div class="mb-3 text-center">
-                        <h1>Bootstrap Sidebar Tutorial</h1>
+                        {% block main %} {% endblock %}
                     </div>
                 </div>
             </main>
         </div>
     </div>
-    <script src="script.js"></script> 
+    <script src="{{url_for('static', filename='js/app.js') }}"></script> 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script> 
 </body>
 </html>
