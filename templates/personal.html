@@ -14,7 +14,7 @@
 </div>
 <div class="col-md-12">
     <div class="card shadow ">
-        <div class="card-header">Manage Task</div>
+        <div class="card-header">Manage Personal Task</div>
         <div class="card-body">
             <form action="/add" method="POST">
                 <label for="">task title</label>
@@ -66,14 +66,12 @@
 				<div class="card-body">
 					<h5> {{ task.id }} - {{ task.title }} - {{task.task}}-{{task.description}}-{{task.tart_date}}- {{task.deadline}} </h5>
 					{% if task.complete %}
-					<span class="badge bg-success">Completed</span>
+					<span class="badge bg-success"><i class="lni lni-checkmark"></i></span>
 					{% else %}
-					<span class="badge bg-secondary">Not completed</span>
+					<span class="badge bg-secondary"><i class="lni lni-spinner"></i></span>
 					{% endif %}
 					<a class="btn btn-info btn-sm" href="/update/{{ task.id }}">Update</a>
-					<a class="btn btn-danger btn-sm" href="/delete/{{ task.id }}"
-						>Delete</a
-					>
+					<a class="btn btn-danger btn-sm" href="/delete/{{ task.id }}"><i class="lni lni-trash-can"></i></a>
 				</div>
 			</div>
 			{% endfor %}

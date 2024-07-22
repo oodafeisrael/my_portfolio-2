@@ -33,13 +33,15 @@ db = SQLAlchemy(app)
 class Personal_task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100))
+    task = db.Column(db.String(100))
     description = db.Column(db.String(250))
     start_date = db.Column(Date, nullable=False, default=datetime.utcnow)
     deadline = db.Column(Date,nullable=False)
     complete = db.Column(db.Boolean, default=False)
 
-    def __init__(self, title, description, start_date, deadline, complete):
+    def __init__(self, title, task, description, start_date, deadline, complete):
         self.title = title
+        self.task = task
         self.description = description
         self.start_date = start_date
         self.deadline = deadline
@@ -60,6 +62,7 @@ def personal():
 def add():
     if request.method == "POST":
         title = request.form.get('title')
+        task = request.form.get('task')
         description = request.form.get('description')
         start_date_string = request.form.get('start_date')
         deadline_string = request.form.get('deadline')
@@ -67,7 +70,7 @@ def add():
        # start_date_object = datetime.strptime(start_date_string, '%Y-%m-%d').date()
        # deadline_object = datetime.strptime(deadline_string, '%Y-%m-%d').date()
         
-        if not title or not start_date_string or not deadline_string:
+        if not title or not task or not start_date_string or not deadline_string:
             flash('All fields are required!', 'danger')
             return redirect(url_for('add'))
 
@@ -78,35 +81,38 @@ def add():
             flash('Invalid date format!', 'danger')
             return redirect(url_for('add'))
         
-        new_task = Personal_task(title=title, description=description, start_date=start_date, deadline=deadline, complete=False) 
+        new_task = Personal_task(title=title, task=task, description=description, start_date=start_date, deadline=deadline, complete=False) 
         db.session.add(new_task)
         db.session.commit() 
         flash('Task added successfully!', 'success')
     return redirect(url_for('personal'))
-    #return render_template(add)
+    return render_template(add)
 
-@app.route('/update/<int:id>')
+@app.route('/update/<int:id>', methods=['GET', 'POST'])
 def update(id):
     task = Personal_task.query.filter_by(id=id).first()
     task.complete = not task.complete
     db.session.commit()
-    return redirect(url_for('personal'))
+    return redirect(url_for('view'))
 
 @app.route('/delete/<int:id>')
 def delete(id):
     task = Personal_task.query.filter_by(id=id).first()
     db.session.delete(task)
     db.session.commit()
-    return redirect(url_for('personal'))
+    return redirect(url_for('view'))
 
 @app.route('/work')
 def work():
     return render_template('work.html') 
 
-@app.route('/view')
+@app.route('/view', methods=['GET'])
 def view():
     tasks = Personal_task.query.all()
-    return render_template('view.html', tasks=tasks) 
+    if tasks:
+        return render_template('view.html', tasks=tasks)
+    #return f"Your task list is empty"
+    return render_template('personal.html', tasks=tasks) 
 
 @app.route('/notify')
 def notify():
