@@ -4,17 +4,38 @@
 {% block main %}
 <div class="container">
     <div class="row">
-        <div class="col">
+        <div class="col" style="min-height: 220px;">
          <h2>Taschedo</h2>
          <marquee class="mt-6 display-6" behavior="" direction=""
          ><h1>Welcome to your best task management tool</h1></marquee>
          <p>Taschedo is a task management system designed to help individuals and teams organize, prioritize, and track their tasks efficiently.
             It is developed to provide a user-friendly and scalable solution that integrates with existing tools to enhance productivity.
-            <p>Developed by Odafe O. Israel</p>
         </p>
         </div>
     </div>
-</div>
-
-
+    <div class="col" >
+        <div class="card" style="min-height: 245px;">
+            <div class="card-header">
+              Featured
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Special title treatment</h5>
+              <p class="card-text">For your advert placement please call 07036300829.</p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-between align-items-center">
+        <div class="social-icons">
+            <a href="#"><i class="lni lni-facebook-fill" style="color: #3B5998;"></i></a>
+            <a href="#"><i class="lni lni-twitter-fill" style="color: rgb(29, 161, 242);"></i></a>
+            <a href="#"><i class="lni lni-instagram-fill" style=" color: rgb(225, 48, 108)"></i></a>
+            <a href="#"><i class="lni lni-linkedin-original" style="color: rgb(10, 102, 194);"></i></a>
+            <a href="#"><i class="lni lni-whatsapp" style="color: rgb(37, 211, 102);"></i></a>
+        </div>
+        <div class="text-end ms-auto">
+            <p>&copy; 2024 Taschedo. All rights reserved. Powered by citronDev Tech</p>
+        </div>
+    </div>
+    
  {% endblock %}

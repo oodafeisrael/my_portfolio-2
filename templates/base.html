@@ -7,6 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="{{url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/footer.css')}}"
 </head>
 <body>
     <div class="d-flex">
@@ -20,28 +21,21 @@
                 <li class="sidebar-header">
                     Menu
                 </li>
-                <li class="sidebar-item" >
+                <li class="sidebar-item">
                     <a href="/" class="sidebar-link">
                         <i class="lni lni-home"></i>
-                        <span></span>
-                    </a>
+                        <span>Home</span>
+                    </a> 
                 </li>
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
-                        data-bs-target="#task" aria-expanded="true" aria-controls="task">
+                <li class="sidebar-item dropdown">
+                    <a href="#" class="sidebar-link btn btn-secondary dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="lni lni-notepad"></i>
                         <span>Task</span>
                     </a>
-                    <ul id="task" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                        <li class="sidebar-item">
-                            <a href="{{url_for('personal')}}" class="sidebar-link">personal</a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="{{url_for('work')}}" class="sidebar-link">Work</a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="{{url_for('view')}}" class="sidebar-link">View task</a>
-                        </li>
+                    <ul class="dropdown-menu">
+                        <li class="sidebar-item"><a href="{{url_for('personal')}}" class="dropdown-item sidebar-link">Personal</a></li>
+                        <li class="sidebar-item"><a href="{{url_for('work')}}" class="dropdown-item sidebar-link">Work</a></li>
+                        <li class="sidebar-item"><a href="{{url_for('view')}}" class="dropdown-item sidebar-link">View Task</a></li>
                     </ul>
                 </li>
                 <li class="sidebar-item">
@@ -59,26 +53,23 @@
                 <li class="sidebar-header">
                     Tools
                 </li>
-                
-                
                 <li class="sidebar-item">
                     <a href="#" class="sidebar-link">
                         <i class="lni lni-cog"></i>
                         <span>Setting</span>
                     </a>
                 </li>
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
-                        data-bs-target="#auth" aria-expanded="true" aria-controls="auth">
+                <li class="sidebar-item dropdown">
+                    <a href="#" class="sidebar-link btn btn-secondary dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="lni lni-lock"></i>
                         <span>Auth</span>
                     </a>
-                    <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                    <ul class="dropdown-menu">
                         <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">Login</a>
+                            <a href="#" class="dropdown-item sidebar-link">Login</a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">Register</a>
+                            <a href="#" class="dropdown-item sidebar-link">Register</a>
                         </li>
                     </ul>
                 </li>
@@ -86,10 +77,9 @@
             <!-- Sidebar Navigation Ends -->
             <div class="sidebar-footer">
                 <a href="#" class="sidebar-link">
-                    <i class="lni lni-whatsapp"></i>
-                    <span>Group</span>
+                    <span></span>
                 </a>
-            </div>
+            </div> 
         </aside>
         <!-- Sidebar Ends -->
         <!-- Main Component -->
@@ -98,10 +88,10 @@
                 <button class="toggler-btn" type="button">
                     <i class="lni lni-menu"></i>
                 </button>
-            </nav>
+            </nav>    
             <main class="p-3">
                 <div class="container-fluid">
-                    <div class="mb-3 text-center">
+                    <div class="mb-3 ">
                         {% block main %} {% endblock %}
                     </div>
                 </div>
@@ -110,6 +100,8 @@
     </div>
     <script src="{{url_for('static', filename='js/app.js') }}"></script> 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script> 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{url_for('static', filename='js/ajax.js') }}"></script>
 </body>
 </html>
 

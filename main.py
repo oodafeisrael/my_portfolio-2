@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, redirect, request, flash
+from flask import Flask, render_template, url_for, redirect, request, flash, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Date
 from datetime import datetime
@@ -46,6 +46,10 @@ class Personal_task(db.Model):
         self.start_date = start_date
         self.deadline = deadline
         self.complete = complete
+        
+#with app.app_context():
+    #create all tables
+    #db.create_all()
 
 
 @app.route("/")
@@ -95,12 +99,26 @@ def update(id):
     db.session.commit()
     return redirect(url_for('view'))
 
-@app.route('/delete/<int:id>')
+@app.route('/delete/<int:id>', methods=['POST'])
 def delete(id):
-    task = Personal_task.query.filter_by(id=id).first()
-    db.session.delete(task)
-    db.session.commit()
-    return redirect(url_for('view'))
+    # Check if the method was intended to be DELETE
+    if request.form.get('_method') == 'DELETE':
+        task = Personal_task.query.filter_by(id=id).first()
+        if task is None:
+            return jsonify({'success': False, 'message': 'Task not found!'}), 404
+
+        try:
+            db.session.delete(task)
+            db.session.commit()
+            return jsonify({'success': True, 'message': 'Task successfully deleted!'})
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({'success': False, 'message': 'An error occurred while deleting the task.'}), 500
+    else:
+        return jsonify({'success': False, 'message': 'Invalid method.'}), 405
+
+
+
 
 @app.route('/work')
 def work():
@@ -113,6 +131,32 @@ def view():
         return render_template('view.html', tasks=tasks)
     #return f"Your task list is empty"
     return render_template('personal.html', tasks=tasks) 
+
+@app.route('/edit/<int:id>', methods=['GET', 'POST'])
+def edit(id):
+     # Fetch the task based on the id for both GET and POST requests
+    task = Personal_task.query.get(id)
+    
+    if task is None:
+        # Handle case where task is not found (optional)
+        flash("Task not found")
+        return redirect(url_for('view'))
+    
+    if request.method == "POST":
+        task = Personal_task.query.get(request.form.get('id'))
+        
+        task.title = request.form['title']
+        task.task = request.form['task']
+        task.description = request.form['description']
+        task.start_date = datetime.strptime(request.form['start_date'], '%Y-%m-%d').date()
+        task.deadline = datetime.strptime(request.form['deadline'], '%Y-%m-%d').date()
+        
+        db.session.commit()
+        flash("task successfully updated")
+        return redirect(url_for('view'))
+    
+    task = Personal_task.query.filter_by(id=id).first()  
+    return render_template('personal.html', task=task) 
 
 @app.route('/notify')
 def notify():

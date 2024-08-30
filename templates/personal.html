@@ -3,77 +3,67 @@
 {% block main %}
 <div class="container">
     <div class="row">
-        <div class="col md-4">
-         <div class="jumbotron" p-3>
-            <h2><button type="button" class="btn btn-success " 
-                data-toggle="modal" data-target="#mymodal">Add new task</button></h2>
+        <!-- Flash Message Section -->
+        <div class="col-md-6">
+            {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+            {% for category, message in messages %}
+                <div id="liveAlertPlaceholder" class="alert alert-{{ category }} alert-dismissible fade show" role="alert" style="width: 100%; float: left; margin-left: 0;">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endfor %}
+            {% endif %}
+            {% endwith %}
+        </div>
+    </div>
+    <!-- Form Section -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header text-center">Manage Personal Task</div>
+                <div class="card-body">
+                    <form action="/add" method="POST">
+                        <label for="">Task title</label>
+                        <input type="text" name="title" class="form-control" placeholder="" />
+                        <label for="">Task</label>
+                        <input type="text" name="task" class="form-control" placeholder="" />
+                        <label for="">Description (optional)</label>
+                        <input type="text" name="description" class="form-control" placeholder="" />
+                        <label for="">Start date</label>
+                        <input type="date" name="start_date" class="form-control" placeholder="" />
+                        <label for="">Deadline</label>
+                        <input type="date" name="deadline" class="form-control" placeholder="" />
+                        <input type="submit" value="Add new task" class="btn btn-primary btn-sm mt-2 float-end" />
+                    </form>
+                </div>
+            </div>
+        </div>
 
-         </div> 
+        <!-- Task List Section (scrollable) -->
+        <div class="col-md-6">
+            <div class="scroll-container" style="max-height: 400px; overflow-y: auto;">
+                {% for task in tasks %}
+                <div id="task-{{ task.id }}" class="border-start border-5 mt-3 icon-container">
+                    <div class="p-3">
+                        <h5>{{ task.id }} - {{task.task}} - {{task.deadline}}</h5>
+                        {% if task.complete %}
+                        <span class="badge bg-success"><i class="lni lni-checkmark"></i></span>
+                        {% else %}
+                        <span class="badge bg-secondary"><i class="lni lni-spinner"></i></span>
+                        {% endif %}
+                        <a class="btn btn-info btn-sm" href="/update/{{ task.id }}">Done</a>
+                        <form action="/delete/{{ task.id }}" method="POST" style="display:inline;">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button type="submit" class="btn btn-danger btn-sm btn-delete" onclick="confirmDelete(this)">
+                                <i class="lni lni-trash-can"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 </div>
-<div class="col-md-12">
-    <div class="card shadow ">
-        <div class="card-header">Manage Personal Task</div>
-        <div class="card-body">
-            <form action="/add" method="POST">
-                <label for="">task title</label>
-                <input
-                    type="text"
-                    name="title"
-                    class="form-control"
-                    placeholder="Enter your title here.."
-                />
-                <label for="">task</label>
-                <input
-                    type="text"
-                    name="task"
-                    class="form-control"
-                    placeholder="Enter your task here.."
-                />
-                <label for="">Description(optional)</label>
-                <input
-                    type="text"
-                    name="description"
-                    class="form-control"
-                    placeholder="Enter your task description here.."
-                />
-                <label for="">Start date</label>
-                <input
-                    type="date"
-                    name="start_date"
-                    class="form-control"
-                    placeholder="Enter start date here.."
-                />
-                <label for="">Deadline</label>
-                <input
-                    type="date"
-                    name="deadline"
-                    class="form-control"
-                    placeholder="Enter due date here.."
-                />
-                <input
-                    type="submit"
-                    value="Add new task"
-                    class="btn btn-primary btn-sm mt-2"
-                />
-            </form>
-        </div>
-    </div>
-</div>
-{% for task in tasks %}
-			<div class="border-start border-5 shadow mt-3">
-				<div class="card-body">
-					<h5> {{ task.id }} - {{ task.title }} - {{task.task}}-{{task.description}}-{{task.tart_date}}- {{task.deadline}} </h5>
-					{% if task.complete %}
-					<span class="badge bg-success"><i class="lni lni-checkmark"></i></span>
-					{% else %}
-					<span class="badge bg-secondary"><i class="lni lni-spinner"></i></span>
-					{% endif %}
-					<a class="btn btn-info btn-sm" href="/update/{{ task.id }}">Update</a>
-					<a class="btn btn-danger btn-sm" href="/delete/{{ task.id }}"><i class="lni lni-trash-can"></i></a>
-				</div>
-			</div>
-			{% endfor %}
-
- {% endblock %}
+{% endblock %}
