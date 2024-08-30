@@ -6,6 +6,6 @@ virtual environment: sudo apt install python3-venv
 source pf2_env/bin/activate
 (pf2_env) root@Israel-HP:/mnt/c/Users/Israel/New_projects/my_python-projects/my_portfolio-2# 
 
-Database: Mysql in wampserver
+Database: Mysql in wampserver located in windows C drive
 
 Run: python3 main.py

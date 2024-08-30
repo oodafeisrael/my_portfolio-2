@@ -19,8 +19,8 @@ def create_app():
 app.secret_key = os.urandom(24)      
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.SECRET_KEY = 'bace1b5adc790cfb9027f100ff9e1478'
-#app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:''@localhost/taschedo"
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'app.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:''@localhost/taschedo"
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'app.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
